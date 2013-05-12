@@ -30,6 +30,7 @@ function ndfft(dir, x, y) {
   //Copy into x1/y1
   ops.assign(x1, x)
   ops.assign(y1, y)
+  
   for(i=d-1; i>=0; --i) {
     fftm(dir, size/shape[i], shape[i], buffer, x1.offset, y1.offset, scratch_ptr)
     if(i === 0) {
@@ -49,9 +50,6 @@ function ndfft(dir, x, y) {
       n *= shape[j]
     }
     
-    console.log(x1.stride, y1.stride, x1.shape)
-    console.log(x2.stride, y2.stride, y1.shape)
-    
     //Transpose
     ops.assign(x2, x1)
     ops.assign(y2, y1)
@@ -64,8 +62,6 @@ function ndfft(dir, x, y) {
     y1 = y2
     y2 = tmp
   }
-  
-  console.log(x.stride, "<-", x1.stride, x.get(0,5), x1.get(0, 5))
   
   //Copy result back into x
   ops.assign(x, x1)
