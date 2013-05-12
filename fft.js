@@ -17,8 +17,10 @@ function ndfft(dir, x, y) {
     stride[i] = size
     size *= shape[i]
     pad = Math.max(pad, fftm.scratchMemory(shape[i]))
+    if(x.shape[i] !== y.shape[i]) {
+      throw new Error("Shape mismatch, real and imaginary arrays must have same size")
+    }
   }
-  
   var buffer = scratch(4 * size + pad, "double")
   var x1 = ndarray(buffer, shape.slice(0), stride, 0)
     , y1 = ndarray(buffer, shape.slice(0), stride.slice(0), size)

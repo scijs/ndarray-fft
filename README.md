@@ -2,8 +2,6 @@ ndarray-fft
 ===========
 A fast Fourier transform implementation for [ndarrays](https://github.com/mikolalysenko/ndarray).  You can use this to do image processing operations on big, higher dimensional typed arrays in JavaScript.
 
-**WORK IN PROGRESS**
-
 ## Example
 
 ```javascript
@@ -21,12 +19,20 @@ fft(1, x, y)
 fft(-1, x, y)
 ```
 
+## Install
+Via npm:
+
+    npm install ndarray-fft
+
+
 ### `require("ndarray-fft")(dir, x, y)`
 Executes a fast Fourier transform on the complex valued array x/y.  
 
 * `dir` - Either +/- 1.  Determines whether to use a forward or inverse FFT
-* `x` the real part of the typed array
-* `y` the imaginary part of the typed array.
+* `x` the real part of the signal, encoded as an ndarray
+* `y` the imaginary part of the signal, encoded as an ndarray
+
+`x` and `y` are transformed in place.
 
 **Note** This code is fastest when the components of the shapes arrays are all powers of two.  For non-power of two shapes, Bluestein's fft is used which is somewhat slower.  Also note that this code clobbers [scratch](https://github.com/mikolalysenko/scratch) memory.
 
