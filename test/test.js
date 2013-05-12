@@ -63,6 +63,7 @@ require("tap").test("ndarray-fft", function(t) {
     }
   }
   
+  /*
   test_spike(1)
   test_spike(2)
   test_spike(4)
@@ -76,6 +77,12 @@ require("tap").test("ndarray-fft", function(t) {
   test_spike(15)
   test_spike(17)
   
+  for(var i=1; i<100; ++i) {
+    test_random([i])
+  }
+  */
+  
+  test_random([10, 8])
   
   t.end()
 })
