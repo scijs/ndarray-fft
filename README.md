@@ -34,7 +34,7 @@ Executes a fast Fourier transform on the complex valued array x/y.
 
 `x` and `y` are transformed in place.
 
-**Note** This code is fastest when the components of the shapes arrays are all powers of two.  For non-power of two shapes, Bluestein's fft is used which is somewhat slower.  Also note that this code clobbers [scratch](https://github.com/mikolalysenko/scratch) memory.
+**Note** This code is fastest when the components of the shapes arrays are all powers of two.  For non-power of two shapes, Bluestein's fft is used which is somewhat slower.
 
 # Credits
 (c) 2013 Mikola Lysenko.  MIT License.

@@ -5,6 +5,7 @@ var ops = require("ndarray-ops")
 var cwise = require("cwise")
 var ndarray = require("ndarray")
 var fftm = require("./lib/fft-matrix.js")
+var pool = require("typedarray-pool")
 
 function ndfft(dir, x, y) {
   var shape = x.shape
@@ -21,7 +22,7 @@ function ndfft(dir, x, y) {
       throw new Error("Shape mismatch, real and imaginary arrays must have same size")
     }
   }
-  var buffer = scratch(4 * size + pad, "double")
+  var buffer = pool.malloc(4 * size + pad, "double")
   var x1 = ndarray(buffer, shape.slice(0), stride, 0)
     , y1 = ndarray(buffer, shape.slice(0), stride.slice(0), size)
     , x2 = ndarray(buffer, shape.slice(0), stride.slice(0), 2*size)
@@ -68,6 +69,8 @@ function ndfft(dir, x, y) {
   //Copy result back into x
   ops.assign(x, x1)
   ops.assign(y, y1)
+  
+  pool.free(buffer)
 }
 
 module.exports = ndfft
