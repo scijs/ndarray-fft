@@ -1,6 +1,5 @@
 "use strict"
 
-var scratch = require("scratch")
 var ops = require("ndarray-ops")
 var cwise = require("cwise")
 var ndarray = require("ndarray")

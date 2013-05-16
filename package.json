@@ -1,6 +1,6 @@
 {
   "name": "ndarray-fft",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "FFT for ndarrays",
   "main": "fft.js",
   "directories": {
