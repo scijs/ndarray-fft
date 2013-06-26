@@ -21,7 +21,15 @@ function ndfft(dir, x, y) {
       throw new Error("Shape mismatch, real and imaginary arrays must have same size")
     }
   }
-  var buffer = pool.malloc(4 * size + pad, "double")
+  var buf_size = 4 * size + pad
+  var buffer
+  if( x.dtype === "array" ||
+      x.dtype === "float64" ||
+      x.dtype === "custom" ) {
+    buffer = pool.mallocDouble(buf_size)
+  } else {
+    buffer = pool.mallocFloat(buf_size)
+  }
   var x1 = ndarray(buffer, shape.slice(0), stride, 0)
     , y1 = ndarray(buffer, shape.slice(0), stride.slice(0), size)
     , x2 = ndarray(buffer, shape.slice(0), stride.slice(0), 2*size)

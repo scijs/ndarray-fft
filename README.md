@@ -5,12 +5,12 @@ A fast Fourier transform implementation for [ndarrays](https://github.com/mikola
 ## Example
 
 ```javascript
-var ndarray = require("ndarray")
+var zeros = require("zeros")
 var ops = require("ndarray-ops")
 var fft = require("ndarray-fft")
 
-var x = ops.random(ndarray.zeros([256, 256]))
-  , y = ops.random(ndarray.zeros([256, 256]))
+var x = ops.random(zeros([256, 256]))
+  , y = ops.random(zeros([256, 256]))
 
 //Forward transform x/y
 fft(1, x, y)

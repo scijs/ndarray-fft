@@ -3,6 +3,7 @@
 var ndfft = require("../fft.js")
 var ndarray = require("ndarray")
 var ops = require("ndarray-ops")
+var zeros = require("zeros")
 var almostEqual = require("almost-equal")
 
 var EPSILON = almostEqual.FLT_EPSILON
@@ -47,8 +48,8 @@ require("tap").test("ndarray-fft", function(t) {
                almostEqual(ai, bi, EPSILON, EPSILON),
                str + "/n=(" + n + "," + m + "), i=(" + i1 + "," + i2 + "), j=(" + j1 + "," + j2 + "), - got: " + ar + " + " + ai + "i, expect: " + br + " + " + bi + "i")
     }
-    var x = ndarray.zeros([n, m])
-    var y = ndarray.zeros([n, m])
+    var x = zeros([n, m])
+    var y = zeros([n, m])
     for(i1=0; i1<n; ++i1) {
       for(i2=0; i2<m; ++i2) {
         ops.assigns(x, 0.0)
@@ -88,14 +89,16 @@ require("tap").test("ndarray-fft", function(t) {
     function eq(a, b) {
       t.assert(almostEqual(a, b, EPSILON, EPSILON),"rnd/n=" + shape + ", i=" + i + " - got: " + a + ", expect: " + b)
     }
-    var x = ndarray.zeros(shape)
-      , y = ndarray.zeros(shape)
+    var x = zeros(shape)
+      , y = zeros(shape)
       
     ops.random(x)
     ops.random(y)
     
-    var xp = ops.clone(x)
-      , yp = ops.clone(y)
+    var xp = zeros(shape)
+      , yp = zeros(shape)
+    ops.assign(xp, x)
+    ops.assign(yp, y)
     
     ndfft(1, x, y)
     ndfft(-1, x, y)
