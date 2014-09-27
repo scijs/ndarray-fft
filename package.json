@@ -1,22 +1,22 @@
 {
   "name": "ndarray-fft",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "FFT for ndarrays",
   "main": "fft.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "bit-twiddle": "~0.0.2",
-    "ndarray": "~1.0.0",
-    "ndarray-ops": "~1.1.0",
-    "cwise": "~0.3.2",
-    "typedarray-pool": "~0.1.1"
+    "bit-twiddle": "^1.0.2",
+    "ndarray": "^1.0.15",
+    "ndarray-ops": "^1.2.2",
+    "cwise": "^1.0.4",
+    "typedarray-pool": "^1.0.0"
   },
   "devDependencies": {
-    "almost-equal": "~0.0.0",
-    "tap": "~0.4.2",
-    "zeros": "~0.0.0"
+    "tape": "^3.0.0",
+    "zeros": "0.0.0",
+    "almost-equal": "0.0.0"
   },
   "scripts": {
     "test": "tap test/*.js"
@@ -42,5 +42,8 @@
   "author": "Mikola Lysenko",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "1847ab09f0f2fdc1103bca773b7bc0b0bd55b12d"
+  "gitHead": "1847ab09f0f2fdc1103bca773b7bc0b0bd55b12d",
+  "browserify": {
+    "transform": "cwise"
+  }
 }

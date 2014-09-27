@@ -1,10 +1,9 @@
-"use strict"
+'use strict'
 
-var ops = require("ndarray-ops")
-var cwise = require("cwise")
-var ndarray = require("ndarray")
-var fftm = require("./lib/fft-matrix.js")
-var pool = require("typedarray-pool")
+var ops = require('ndarray-ops')
+var ndarray = require('ndarray')
+var pool = require('typedarray-pool')
+var fftm = require('./lib/fft-matrix.js')
 
 function ndfft(dir, x, y) {
   var shape = x.shape
@@ -18,14 +17,14 @@ function ndfft(dir, x, y) {
     size *= shape[i]
     pad = Math.max(pad, fftm.scratchMemory(shape[i]))
     if(x.shape[i] !== y.shape[i]) {
-      throw new Error("Shape mismatch, real and imaginary arrays must have same size")
+      throw new Error('Shape mismatch, real and imaginary arrays must have same size')
     }
   }
   var buf_size = 4 * size + pad
   var buffer
-  if( x.dtype === "array" ||
-      x.dtype === "float64" ||
-      x.dtype === "custom" ) {
+  if( x.dtype === 'array' ||
+      x.dtype === 'float64' ||
+      x.dtype === 'custom' ) {
     buffer = pool.mallocDouble(buf_size)
   } else {
     buffer = pool.mallocFloat(buf_size)

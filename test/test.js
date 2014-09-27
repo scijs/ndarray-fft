@@ -8,7 +8,7 @@ var almostEqual = require("almost-equal")
 
 var EPSILON = almostEqual.FLT_EPSILON
 
-require("tap").test("ndarray-fft", function(t) {
+require("tape")("ndarray-fft", function(t) {
   
   function test_spike(n) {
     var i, j
