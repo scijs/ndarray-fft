@@ -36,6 +36,8 @@ Executes a fast Fourier transform on the complex valued array x/y.
 
 **Note** This code is fastest when the components of the shapes arrays are all powers of two.  For non-power of two shapes, Bluestein's fft is used which is somewhat slower.
 
+**Note2** The inverse FFT is scaled by 1/N, forward FFT is unnormalized.
+
 # Credits
 (c) 2013 Mikola Lysenko.  MIT License.
 
