@@ -1,6 +1,9 @@
 ndarray-fft
 ===========
-A fast Fourier transform implementation for [ndarrays](https://github.com/mikolalysenko/ndarray).  You can use this to do image processing operations on big, higher dimensional typed arrays in JavaScript.
+
+[![Build Status](https://travis-ci.org/scijs/ndarray-fft.svg)](https://travis-ci.org/scijs/ndarray-fft)
+
+> A fast Fourier transform implementation for [ndarrays](https://github.com/mikolalysenko/ndarray).  You can use this to do image processing operations on big, higher dimensional typed arrays in JavaScript.
 
 ## Example
 
