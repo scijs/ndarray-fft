@@ -5,6 +5,7 @@ var ndarray = require("ndarray")
 var ops = require("ndarray-ops")
 var zeros = require("zeros")
 var almostEqual = require("almost-equal")
+var arrayAlmostEqual = require("array-almost-equal")
 
 var EPSILON = almostEqual.FLT_EPSILON
 
@@ -16,7 +17,9 @@ require("tape")("ndarray-fft", function(t) {
       t.assert(almostEqual(a, b, EPSILON, EPSILON), str + "/n=" + n + ", i=" + i + " - got: " + a + ", expect: " + b)
     }
     var x = ndarray(new Float64Array(n))
+    var xr = ndarray(new Float64Array(n))
     var y = ndarray(new Float64Array(n))
+    var yr = ndarray(new Float64Array(n))
     for(i=0; i<n; ++i) {
       for(j=0; j<n; ++j) {
         x.set(j, 0.0)
@@ -26,18 +29,22 @@ require("tape")("ndarray-fft", function(t) {
       ndfft(1, x, y)
       for(j=0; j<n; ++j) {
         var a = 2.0 * Math.PI * i * j / n
-        eq(x.get(j), Math.cos(a), "fwd")
-        eq(y.get(j), Math.sin(a), "fwd")
+        xr.set(j, Math.cos(a))
+        yr.set(j, Math.sin(a))
       }
+      t.assert(arrayAlmostEqual(x.data, xr.data), "1D Forward real part (n="+n+").")
+      t.assert(arrayAlmostEqual(y.data, yr.data), "1D Forward imaginary part (n="+n+").")
       ndfft(-1, x, y)
       for(j=0; j<n; ++j) {
         if(j === i) {
-          eq(x.get(j), 1.0, "inv")
+          xr.set(j, 1.0)
         } else {
-          eq(x.get(j), 0.0, "inv")
+          xr.set(j, 0.0)
         }
-        eq(y.get(j), 0.0, "inv")
+        yr.set(j, 0.0)
       }
+      t.assert(arrayAlmostEqual(x.data, xr.data), "1D Inverse real part (n="+n+").")
+      t.assert(arrayAlmostEqual(y.data, yr.data), "1D Inverse imaginary part (n="+n+").")
     }
   }
   
@@ -49,7 +56,9 @@ require("tape")("ndarray-fft", function(t) {
                str + "/n=(" + n + "," + m + "), i=(" + i1 + "," + i2 + "), j=(" + j1 + "," + j2 + "), - got: " + ar + " + " + ai + "i, expect: " + br + " + " + bi + "i")
     }
     var x = zeros([n, m])
+    var xr = zeros([n, m])
     var y = zeros([n, m])
+    var yr = zeros([n, m])
     for(i1=0; i1<n; ++i1) {
       for(i2=0; i2<m; ++i2) {
         ops.assigns(x, 0.0)
@@ -61,24 +70,26 @@ require("tape")("ndarray-fft", function(t) {
           var a = 2.0 * Math.PI * i1 * j1 / n
           for(j2=0; j2<m; ++j2) {
             var b = 2.0 * Math.PI * i2 * j2 / m
-            eq( x.get(j1, j2),
-                y.get(j1, j2),
-                Math.cos(a) * Math.cos(b) - Math.sin(a) * Math.sin(b),
-                Math.sin(a) * Math.cos(b) + Math.cos(a) * Math.sin(b),
-                "fwd" )
+            xr.set(j1,j2, Math.cos(a) * Math.cos(b) - Math.sin(a) * Math.sin(b))
+            yr.set(j1,j2, Math.sin(a) * Math.cos(b) + Math.cos(a) * Math.sin(b))
           }
         }
-        ndfft(-1, x, y)
-        
+        t.assert(arrayAlmostEqual(x.data, xr.data), "2D Forward real part (n="+n+",m="+m+").")
+        t.assert(arrayAlmostEqual(y.data, yr.data), "2D Forward imaginary part (n="+n+",m="+m+").")
+
+        ndfft(-1, x, y)        
         for(j1=0; j1<n; ++j1) {
           for(j2=0; j2<m; ++j2) {
             if(j1 === i1 && j2 === i2) {
-              eq(x.get(j1, j2), y.get(j1, j2), 1.0, 0.0, "inv")
+              xr.set(j1,j2, 1.0)
             } else {
-              eq(x.get(j1, j2), y.get(j1, j2), 0.0, 0.0, "inv")
+              xr.set(j1,j2, 0.0)
             }
+            yr.set(j1,j2, 0.0)
           }
         }
+        t.assert(arrayAlmostEqual(x.data, xr.data), "2D Forward real part (n="+n+",m="+m+").")
+        t.assert(arrayAlmostEqual(y.data, yr.data), "2D Forward imaginary part (n="+n+",m="+m+").")
       }
     }
   }
@@ -103,10 +114,8 @@ require("tape")("ndarray-fft", function(t) {
     ndfft(1, x, y)
     ndfft(-1, x, y)
     
-    for(i=0; i<x.data.length; ++i) {
-      eq(x.data[i], xp.data[i])
-      eq(y.data[i], yp.data[i])
-    }
+    t.assert(arrayAlmostEqual(x.data, xp.data), "Random round-trip real part (n="+shape +").")
+    t.assert(arrayAlmostEqual(y.data, yp.data), "Random round-trip imaginary part (n="+shape +").")
   }
   
   test_spike(1)

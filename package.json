@@ -1,6 +1,6 @@
 {
   "name": "ndarray-fft",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "FFT for ndarrays",
   "main": "fft.js",
   "directories": {
@@ -14,9 +14,10 @@
     "typedarray-pool": "^1.0.0"
   },
   "devDependencies": {
+    "almost-equal": "0.0.0",
+    "array-almost-equal": "^1.0.0",
     "tape": "^3.0.0",
-    "zeros": "0.0.0",
-    "almost-equal": "0.0.0"
+    "zeros": "0.0.0"
   },
   "scripts": {
     "test": "node test/*.js"
