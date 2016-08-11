@@ -55,10 +55,10 @@ require("tape")("ndarray-fft", function(t) {
                almostEqual(ai, bi, EPSILON, EPSILON),
                str + "/n=(" + n + "," + m + "), i=(" + i1 + "," + i2 + "), j=(" + j1 + "," + j2 + "), - got: " + ar + " + " + ai + "i, expect: " + br + " + " + bi + "i")
     }
-    var x = zeros([n, m])
-    var xr = zeros([n, m])
-    var y = zeros([n, m])
-    var yr = zeros([n, m])
+    var x = zeros([n+5, m+7]).hi(n, m)
+    var xr = zeros([n+5, m+7]).hi(n, m)
+    var y = zeros([n+13, m+9]).hi(n, m)
+    var yr = zeros([n+13, m+9]).hi(n, m)
     for(i1=0; i1<n; ++i1) {
       for(i2=0; i2<m; ++i2) {
         ops.assigns(x, 0.0)
